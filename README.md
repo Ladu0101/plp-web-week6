@@ -69,7 +69,7 @@ let newExpense = {
     date: expenseDate
 };
 
-expenses.push(newExpense);
+expenses.push(newE xpense);
 ```
 
 ### Functions
