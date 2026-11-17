@@ -213,9 +213,6 @@ h3,
 .dashboard-title {
     color: var(--text);
 }
-<aside class="sidebar">
-    <h2>SpendWise</h2>
-</aside>
 /* FORM AND TABLE TYPOGRAPHY */
 
 input, select, button, table {

@@ -1,99 +1,131 @@
 # SpendWise – Personal Budget Tracker
 
-## 1. Project Overview
+## 1. Project Description
 
-SpendWise is a personal budgeting and expense-tracking dashboard designed to help users monitor their spending, manage monthly budgets, and develop better financial habits.
+SpendWise is a personal budget tracking web application developed using HTML, CSS, and JavaScript.
 
-The application provides a simple dashboard where users can view expense categories, track spending against budgets, and navigate between different sections.
+The application helps users manage their expenses, monitor their spending, and calculate their remaining balance.
 
-## 2. Features
+Users can enter expense details, select expense categories, and view their recorded expenses in a table. The dashboard automatically updates total expenses and remaining balance when a new expense is added.
 
-- **Dashboard:** Displays an overview of expenses and budget information.
-- **Add Expense:** Provides a section for recording expenses.
-- **Transactions:** Provides access to transaction records.
-- **Learning:** Includes a section for financial learning.
-- **Expense Categories:** Organises spending into categories such as Food, Transport, Rent, and Entertainment.
-- **Budget Tracking:** Shows spending compared with allocated monthly budgets.
-- **Dark Theme:** Supports the operating system's preferred light or dark colour scheme.
-- **Interactive Cards:** Includes smooth hover and keyboard-focus effects.
-- **Sidebar Navigation:** Provides navigation between the main application sections.
+## 2. JavaScript Concepts Implemented
 
-## 3. Technologies Used
+The following JavaScript concepts were implemented in this project:
 
-- HTML5 – Application structure.
-- CSS3 – Styling, layouts, transitions, animations, and themes.
+- Variables and constants
+- Data types
+- User input
+- Type conversion
+- Arithmetic operators
+- Comparison operators
+- Conditional statements (`if` and `else`)
+- Functions
+- DOM manipulation
+- Event listeners
+- Form validation
 
-## 4. User Interface and Design
+## 3. How Variables Are Used
 
-SpendWise uses a dashboard layout with a vertical sidebar and content cards.
+Variables are used to store information required for budget calculations and expense management.
 
-The design demonstrates:
+Examples include:
 
-- CSS Grid and Flexbox.
-- CSS variables for consistent styling.
-- Hover and focus transitions.
-- Transform and box-shadow effects.
-- Responsive colour themes using `prefers-color-scheme`.
-- Visual organisation of financial information.
+- `monthlyIncome`: Stores the user's monthly income.
+- `monthlyBudget`: Stores the user's monthly budget.
+- `foodExpense`: Stores food expenses.
+- `transportExpense`: Stores transport expenses.
+- `totalExpenses`: Stores the sum of expenses.
+- `remainingBalance`: Stores the money remaining after expenses.
 
-## 5. Running the Project
+The `let` keyword is used for variables whose values can change, while `const` is used for values that should not be reassigned.
 
-1. Download or clone the project repository.
-2. Open the project folder.
-3. Locate `index.html`.
-4. Open `index.html` in a web browser such as Google Chrome.
-5. Explore the dashboard and its navigation sections.
+Example:
 
-No development server is required for the basic HTML, CSS, and JavaScript version.
+```javascript
+let monthlyIncome = 50000;
+let monthlyBudget = 30000;
 
-## 6. Project Structure
-
-The project may contain the following files:
-
-```text
-SpendWise/
-│
-├── index.html
-├── style.css
-├── script.js
-├── images/
-└── README.md
+const currency = "KES";
 ```
 
-*Note: The exact files and folders depend on your project directory.*
+## 4. How User Input Is Collected
 
-## 7. Learning Outcomes
+SpendWise collects user information through two methods.
 
-Through this project, I practised:
+### A. Using prompt()
 
-- Structuring web pages with HTML.
-- Styling dashboards using CSS.
-- Understanding CSS Grid and Flexbox.
-- Working with CSS variables.
-- Creating hover and keyboard-focus interactions.
-- Implementing light and dark themes.
-- Testing a web application in a browser.
-- Organising a practical front-end development project.
+JavaScript's `prompt()` function collects information directly from the user through browser dialog boxes.
 
-## 8. Future Improvements
+Example:
 
-- Add expense editing and deletion.
-- Store transactions using local storage or a database.
-- Add expense charts and reports.
-- Improve mobile responsiveness.
-- Add user authentication.
-- Introduce monthly spending summaries.
+```javascript
+let monthlyIncome = Number(
+    prompt("Enter your monthly income:")
+);
 
-## 9. Author
+let monthlyBudget = Number(
+    prompt("Enter your monthly budget:")
+);
+```
 
-**Charles Ladu**
+The `Number()` function converts the entered values into numbers so they can be used in mathematical calculations.
 
-Software Engineering Student
+### B. Using HTML Form Inputs
 
-## 10. Project Status
+The application also collects expense information through an HTML form.
 
-**Status:** Front-end dashboard development and styling assignment completed.
+Users enter:
 
----
+- Expense name
+- Expense amount
+- Expense category
+- Expense date
 
-*SpendWise – Track your spending. Understand your habits. Manage your money better.*
+JavaScript retrieves the entered information using `document.getElementById()` and the `.value` property.
+
+The Add Expense button uses an event listener to respond when the user clicks it.
+
+## 5. How Calculations Are Performed
+
+JavaScript arithmetic operators are used to calculate total expenses and remaining balance.
+
+### Total Expenses
+
+The application adds individual expense amounts to determine total spending.
+
+```javascript
+let totalExpenses =
+    foodExpense +
+    transportExpense +
+    rentExpense +
+    entertainmentExpense;
+```
+
+### Remaining Budget
+
+The remaining budget is calculated by subtracting total expenses from the monthly budget.
+
+```javascript
+let remainingBudget =
+    monthlyBudget - totalExpenses;
+```
+
+### Remaining Balance
+
+The remaining balance is calculated by subtracting total expenses from monthly income.
+
+```javascript
+let remainingBalance =
+    monthlyIncome - totalExpenses;
+```
+
+### Budget Validation
+
+A comparison operator checks whether total expenses exceed the monthly budget.
+
+```javascript
+let isBudgetExceeded =
+    totalExpenses > monthlyBudget;
+```
+
+When a new expense is
