@@ -1,9 +1,13 @@
 
 // ======================================
-// SPENDWISE - COLLECT USER INPUT
+// SPENDWISE - WEEK 6 INTERACTIVE VERSION
 // ======================================
 
 console.log("===== WELCOME TO SPENDWISE =====");
+
+// ======================================
+// 1. COLLECT MONTHLY FINANCIAL INPUT
+// ======================================
 
 let monthlyIncome = Number(
     prompt("Enter your monthly income (KES):")
@@ -13,154 +17,215 @@ let monthlyBudget = Number(
     prompt("Enter your monthly budget (KES):")
 );
 
-let foodExpense = Number(
-    prompt("Enter your food expenses (KES):")
-);
-
-let transportExpense = Number(
-    prompt("Enter your transport expenses (KES):")
-);
-
-let rentExpense = Number(
-    prompt("Enter your rent expenses (KES):")
-);
-
-let entertainmentExpense = Number(
-    prompt("Enter your entertainment expenses (KES):")
-);
-
-
 // ======================================
-// SPENDWISE - BUDGET CALCULATIONS
+// 2. EXPENSES ARRAY
 // ======================================
 
-// Calculate total expenses
-
-let totalExpenses =
-    foodExpense +
-    transportExpense +
-    rentExpense +
-    entertainmentExpense;
-
-// Calculate remaining budget
-
-let remainingBudget = monthlyBudget - totalExpenses;
-
-// Check whether budget is exceeded
-
-let isBudgetExceeded = totalExpenses > monthlyBudget;
-
+// Store multiple expense records
+let expenses = [];
 
 // ======================================
-// UPDATE SPENDWISE DASHBOARD
+// 3. CONNECT HTML ELEMENTS TO JAVASCRIPT
 // ======================================
 
-// Calculate remaining balance from income
-let remainingBalance = monthlyIncome - totalExpenses;
+const totalIncomeElement = document.getElementById("total-income");
 
-// Find the Total Expenses HTML element
-let totalExpensesElement = document.getElementById("total-expenses");
+const totalExpensesElement = document.getElementById("total-expenses");
 
-// Find the Remaining Balance HTML element
-let remainingBalanceElement = document.getElementById("remaining-balance");
+const remainingBalanceElement = document.getElementById("remaining-balance");
 
-// Update Total Expenses on the dashboard
-totalExpensesElement.textContent =
-    "KES " + totalExpenses.toLocaleString("en-KE");
+const expenseNameInput = document.getElementById("expense-name");
 
-// Update Remaining Balance on the dashboard
-remainingBalanceElement.textContent =
-    "KES " + remainingBalance.toLocaleString("en-KE");
+const expenseAmountInput = document.getElementById("expense-amount");
 
-// ======================================
-// DISPLAY RESULTS
-// ======================================
+const expenseCategoryInput = document.getElementById("expense-category");
 
-console.log("===== SPENDWISE BUDGET REPORT =====");
+const expenseDateInput = document.getElementById("expense-date");
 
-console.log("Monthly Income:", monthlyIncome);
-console.log("Monthly Budget:", monthlyBudget);
-
-console.log("Food Expenses:", foodExpense);
-console.log("Transport Expenses:", transportExpense);
-console.log("Rent Expenses:", rentExpense);
-console.log("Entertainment Expenses:", entertainmentExpense);
-
-console.log("Total Expenses:", totalExpenses);
-console.log("Remaining Budget:", remainingBudget);
-console.log("Budget Exceeded:", isBudgetExceeded);
-
-console.log("SpendWise JavaScript is running!");
-
-// Find the expenses table body
-const expensesTableBody = document.getElementById("expenses-table-body");
-
-// Check whether JavaScript finds the table
-console.log("Expenses table found:", expensesTableBody);
-
-function addExpenseToTable(name, amount, category, date) {
-
-    // Create a new table row
-    const newRow = document.createElement("tr");
-
-    // Add expense information to the row
-    newRow.innerHTML = `
-        <td>${name}</td>
-        <td>${amount.toLocaleString("en-KE")}</td>
-        <td> ${category}</td>
-        <td>${date}</td>
-    `;
-
-    // Add the row to the expenses table
-    expensesTableBody.appendChild(newRow);
-}
-
-// Find the Add Expense button
 const addExpenseButton = document.getElementById("add-expense-btn");
 
-// Listen for button clicks
+const expensesTableBody = document.getElementById("expenses-table-body");
+
+const budgetFeedbackElement = document.getElementById("budget-feedback");
+
+// ======================================
+// 4. CALCULATE TOTAL EXPENSES USING A LOOP
+// ======================================
+
+function calculateTotalExpenses() {
+
+    let total = 0;
+
+    for (let i = 0; i < expenses.length; i++) {
+
+        total = total + expenses[i].amount;
+
+    }
+
+    return total;
+}
+
+// ======================================
+// 5. DISPLAY EXPENSES USING DOM MANIPULATION
+// ======================================
+
+function displayExpenses() {
+
+    // Clear existing table records
+    expensesTableBody.innerHTML = "";
+
+    // Loop through all stored expenses
+    for (let i = 0; i < expenses.length; i++) {
+
+        let expense = expenses[i];
+
+        // Create a new table row
+        let newRow = document.createElement("tr");
+
+        // Create table cells
+        let nameCell = document.createElement("td");
+        let amountCell = document.createElement("td");
+        let categoryCell = document.createElement("td");
+        let dateCell = document.createElement("td");
+
+        // Add expense information to cells
+        nameCell.textContent = expense.name;
+
+        amountCell.textContent =
+            "KES " + expense.amount.toLocaleString("en-KE");
+
+        categoryCell.textContent = expense.category;
+
+        dateCell.textContent = expense.date;
+
+        // Add cells to the row
+        newRow.appendChild(nameCell);
+        newRow.appendChild(amountCell);
+        newRow.appendChild(categoryCell);
+        newRow.appendChild(dateCell);
+
+        // Add row to the table
+        expensesTableBody.appendChild(newRow);
+    }
+}
+
+// ======================================
+// 6. UPDATE THE DASHBOARD
+// ======================================
+
+function updateDashboard() {
+
+    // Calculate total expenses from the array
+    let totalExpenses = calculateTotalExpenses();
+
+    // Calculate remaining balance
+    let remainingBalance = monthlyIncome - totalExpenses;
+
+    // Update total income
+    totalIncomeElement.textContent =
+        "KES " + monthlyIncome.toLocaleString("en-KE");
+
+    // Update total expenses
+    totalExpensesElement.textContent =
+        "KES " + totalExpenses.toLocaleString("en-KE");
+
+    // Update remaining balance
+    remainingBalanceElement.textContent =
+        "KES " + remainingBalance.toLocaleString("en-KE");
+        // Check the user's budget situation
+if (totalExpenses > monthlyBudget) {
+
+    budgetFeedbackElement.textContent =
+        "Warning! You have exceeded your monthly budget.";
+
+} else if (totalExpenses >= monthlyBudget * 0.8) {
+
+    budgetFeedbackElement.textContent =
+        "Caution! You are approaching your budget limit.";
+
+} else {
+
+    budgetFeedbackElement.textContent =
+        "Great! You are within your monthly budget.";
+
+}
+
+    console.log("Total Expenses:", totalExpenses);
+
+    console.log("Remaining Balance:", remainingBalance);
+}
+
+// ======================================
+// 7. HANDLE ADD EXPENSE BUTTON CLICK
+// ======================================
+
 addExpenseButton.addEventListener("click", function() {
 
-    // Get information from the form
-    let expenseName = document.getElementById("expense-name").value;
-    let expenseAmount = Number(document.getElementById("expense-amount").value);
-    let expenseCategory = document.getElementById("expense-category").value;
-    let expenseDate = document.getElementById("expense-date").value;
+    // Collect information from HTML inputs
+    let expenseName = expenseNameInput.value.trim();
 
-    // Check whether the required information is entered
-    if (expenseName.trim() === "" || expenseAmount <= 0 || !Number.isFinite(expenseAmount) || expenseDate === "") {
+    let expenseAmount = Number(expenseAmountInput.value);
+
+    let expenseCategory = expenseCategoryInput.value;
+
+    let expenseDate = expenseDateInput.value;
+
+    // Validate user input
+    if (
+        expenseName === "" ||
+        expenseAmount <= 0 ||
+        !Number.isFinite(expenseAmount) ||
+        expenseDate === ""
+    ) {
 
         alert("Please enter a valid expense name, amount and date.");
 
     } else {
 
-        // Add the expense to the table
-        addExpenseToTable(
-            expenseName,
-            expenseAmount,
-            expenseCategory,
-            expenseDate
-        );
-        // Update total expenses
-totalExpenses = totalExpenses + expenseAmount;
+        // Create a new expense object
+        let newExpense = {
 
-// Recalculate remaining balance
-remainingBalance = monthlyIncome - totalExpenses;
+            name: expenseName,
 
-// Update dashboard cards
-totalExpensesElement.textContent =
-    "KES " + totalExpenses.toLocaleString("en-KE");
+            amount: expenseAmount,
 
-remainingBalanceElement.textContent =
-    "KES " + remainingBalance.toLocaleString("en-KE");
+            category: expenseCategory,
 
-        // Confirm success
+            date: expenseDate
+
+        };
+
+        // Store expense in the array
+        expenses.push(newExpense);
+
+        console.log("Updated expenses array:", expenses);
+
+        // Update expense table
+        displayExpenses();
+
+        // Update dashboard
+        updateDashboard();
+
+        // Confirm successful addition
         alert("Expense added successfully!");
 
-        // Clear the form
-        document.getElementById("expense-name").value = "";
-        document.getElementById("expense-amount").value = "";
-        document.getElementById("expense-date").value = "";
+        // Clear input fields
+        expenseNameInput.value = "";
+
+        expenseAmountInput.value = "";
+
+        expenseDateInput.value = "";
+
     }
 
 });
+
+// ======================================
+// 8. INITIALIZE SPENDWISE DASHBOARD
+// ======================================
+
+displayExpenses();
+
+updateDashboard();
+
+console.log("SpendWise Week 6 is running successfully!");
