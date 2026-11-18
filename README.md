@@ -1,4 +1,7 @@
 # SpendWise – Interactive Expense Tracker
+## Live Demo
+
+Visit SpendWise: https://spendwise-charles.netlify.app
 
 ## 1. Project Description
 
